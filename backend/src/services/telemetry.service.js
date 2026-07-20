@@ -1,12 +1,23 @@
 import { workerPool } from '../workers/worker-pool.js';
+import { telemetryBucketService } from './telemetryBucket.service.js';
 
 export class TelemetryService {
   /**
-   * Delegates incoming raw telemetry processing to the worker pool.
-   * Awaits worker response and returns the processed, validated telemetry.
+   * Pipeline orchestrator:
+   * 1. Offloads CPU validation & normalization to WorkerPool threads.
+   * 2. Saves the normalized results into MongoDB hourly buckets.
+   *
+   * @param {Object} payload - Raw telemetry JSON object from Express route.
+   * @returns {Promise<Object>} Processed telemetry object.
    */
   async ingestTelemetry(payload) {
-    return await workerPool.execute(payload);
+    // 1. Process payload in background thread
+    const processedTelemetry = await workerPool.execute(payload);
+
+    // 2. Persist in Mongoose hourly bucket
+    await telemetryBucketService.storeTelemetry(processedTelemetry);
+
+    return processedTelemetry;
   }
 }
 

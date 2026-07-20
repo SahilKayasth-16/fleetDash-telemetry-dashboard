@@ -19,14 +19,16 @@ export class TelemetryController {
         return;
       }
 
-      // Delegate CPU-intensive validation and processing to worker pool
+      // Delegate CPU-intensive validation, processing and bucket persistence
       const processedTelemetry = await telemetryService.ingestTelemetry(payload);
 
-      // Return processed telemetry with 201 Created status
+      // Return telemetry confirmation in format requested: { vehicleId, stored: true }
       res.status(201).json({
         status: 'success',
-        statusCode: 201,
-        data: processedTelemetry,
+        data: {
+          vehicleId: processedTelemetry.vehicleId,
+          stored: true,
+        },
       });
     } catch (error) {
       // Safely read properties
@@ -46,7 +48,7 @@ export class TelemetryController {
         return;
       }
 
-      // 2. Map known WorkerPool error messages to correct HTTP status codes
+      // 2. Map known WorkerPool/Database error messages to correct HTTP status codes
       if (message.includes('timed out')) {
         statusCode = 504; // Gateway Timeout
       } else if (
