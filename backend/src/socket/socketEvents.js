@@ -1,5 +1,6 @@
 import { logger } from '../logger/index.js';
 import { serializeTelemetry } from '../utils/binarySerializer.js';
+import { metricsService } from '../services/metrics.service.js';
 
 let activeConnections = 0;
 
@@ -11,6 +12,7 @@ let activeConnections = 0;
 export function registerSocketEvents(io) {
   io.on('connection', (socket) => {
     activeConnections++;
+    metricsService.setActiveSocketConnections(activeConnections);
     logger.info(
       `Socket client connected. ID: ${socket.id}. Total active connections: ${activeConnections}`,
     );
@@ -33,6 +35,7 @@ export function registerSocketEvents(io) {
     // Handle disconnects
     socket.on('disconnect', (reason) => {
       activeConnections = Math.max(0, activeConnections - 1);
+      metricsService.setActiveSocketConnections(activeConnections);
       logger.info(
         `Socket client disconnected. ID: ${socket.id}. Reason: ${reason}. Total active connections: ${activeConnections}`,
       );
@@ -59,9 +62,11 @@ export function broadcastTelemetryUpdate(io, telemetryData) {
     // 2. Broadcast binary buffer
     io.emit('telemetry:update', binaryBuffer);
 
-    logger.info(
+    logger.debug(
       `Socket broadcast success: ${telemetryData.vehicleId} emitted in binary (${binaryBuffer.length} bytes) to ${activeConnections} active clients.`,
     );
+
+    metricsService.incrementSocketBroadcasts();
   } catch (error) {
     logger.error(
       `Socket broadcast serialization error for vehicle ${telemetryData?.vehicleId}:`,

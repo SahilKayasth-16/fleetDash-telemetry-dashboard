@@ -1,4 +1,5 @@
 import { telemetryService } from '../services/telemetry.service.js';
+import { metricsService } from '../services/metrics.service.js';
 
 export class TelemetryController {
   /**
@@ -6,6 +7,9 @@ export class TelemetryController {
    * Receives request, passes it down to the worker pool, and returns processed response.
    */
   async ingest(req, res, _next) {
+    const startTime = performance.now();
+    metricsService.incrementTelemetryReceived();
+
     try {
       const payload = req.body;
 
@@ -21,6 +25,9 @@ export class TelemetryController {
 
       // Delegate CPU-intensive validation, processing and bucket persistence
       const processedTelemetry = await telemetryService.ingestTelemetry(payload);
+
+      // Record successful processing time
+      metricsService.recordProcessingTime(performance.now() - startTime);
 
       // Return telemetry confirmation in format requested: { vehicleId, stored: true }
       res.status(201).json({

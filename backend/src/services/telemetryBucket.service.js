@@ -1,5 +1,6 @@
 import { TelemetryBucket } from '../models/TelemetryBucket.model.js';
 import { logger } from '../logger/index.js';
+import { metricsService } from './metrics.service.js';
 
 export class TelemetryBucketService {
   /**
@@ -7,7 +8,7 @@ export class TelemetryBucketService {
    * Groups records into hourly buckets using atomic operations to prevent race conditions.
    *
    * @param {Object} processedTelemetry - Processed telemetry object returned from worker thread.
-   * @returns {Promise<Object>} The updated bucket document.
+   * @returns {Promise<Object>} Write result object.
    */
   async storeTelemetry(processedTelemetry) {
     const { vehicleId, latitude, longitude, speed, heading, timestamp } = processedTelemetry;
@@ -37,17 +38,15 @@ export class TelemetryBucketService {
 
     const options = {
       upsert: true,
-      new: true,
       runValidators: true,
     };
 
     try {
-      return await TelemetryBucket.findOneAndUpdate(filter, update, options);
+      const result = await TelemetryBucket.updateOne(filter, update, options);
+      metricsService.incrementTelemetryStored();
+      return result;
     } catch (error) {
       // 3. Graceful handling of MongoDB Duplicate Key (E11000) write errors.
-      // Under high concurrency, two upsert calls might try to insert the same new bucket document simultaneously.
-      // One transaction succeeds, and the other fails with E11000. Retrying once will now successfully append
-      // to the newly created document.
       if (error.code === 11000) {
         logger.warn(`Concurrently hit duplicate bucket. Retrying storage append for ${vehicleId}`);
         // Remove $setOnInsert since the document is guaranteed to exist now
@@ -63,10 +62,11 @@ export class TelemetryBucketService {
           },
           $inc: { pointCount: 1 },
         };
-        return await TelemetryBucket.findOneAndUpdate(filter, retryUpdate, {
-          new: true,
+        const result = await TelemetryBucket.updateOne(filter, retryUpdate, {
           runValidators: true,
         });
+        metricsService.incrementTelemetryStored();
+        return result;
       }
       logger.error(`Database failure writing telemetry bucket for ${vehicleId}:`, error);
       throw error;

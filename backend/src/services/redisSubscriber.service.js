@@ -8,6 +8,7 @@ export class RedisSubscriberService {
   constructor() {
     this.channelName = 'telemetry:ingested';
     this.subscriberClient = null;
+    this.io = null;
   }
 
   /**
@@ -63,14 +64,16 @@ export class RedisSubscriberService {
    */
   handleMessage(message) {
     try {
-      logger.debug('Redis subscriber received message event, processing...');
+      if (!this.io) {
+        this.io = getSocketIO();
+      }
+      if (!this.io) {
+        return;
+      }
       const telemetryData = JSON.parse(message);
 
-      // Fetch the active Socket.io instance
-      const io = getSocketIO();
-
       // Broadcast payload to all connected clients in binary format
-      broadcastTelemetryUpdate(io, telemetryData);
+      broadcastTelemetryUpdate(this.io, telemetryData);
     } catch (error) {
       logger.error('Redis subscriber failed to parse message packet:', error);
     }

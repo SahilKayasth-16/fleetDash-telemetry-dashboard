@@ -31,7 +31,8 @@ export function serializeTelemetry(telemetry) {
 
     // Calculate total buffer allocation size
     const totalLength = 1 + vehicleIdLength + 8 + 8 + 4 + 2 + 8;
-    const buffer = Buffer.alloc(totalLength);
+    // Use allocUnsafe since we write to every single byte, avoiding zero-fill CPU overhead
+    const buffer = Buffer.allocUnsafe(totalLength);
 
     let offset = 0;
 
@@ -53,8 +54,8 @@ export function serializeTelemetry(telemetry) {
     buffer.writeUInt16LE(heading, offset);
     offset += 2;
 
-    // Write timestamp as double-precision millisecond epoch
-    const timeMs = new Date(timestamp).getTime();
+    // Write timestamp as double-precision millisecond epoch, avoiding redundant Date allocation
+    const timeMs = timestamp instanceof Date ? timestamp.getTime() : new Date(timestamp).getTime();
     buffer.writeDoubleLE(timeMs, offset);
 
     return buffer;

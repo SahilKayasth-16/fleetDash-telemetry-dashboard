@@ -7,6 +7,7 @@ import { connectRedis, disconnectRedis } from './redis/index.js';
 import { workerPool } from './workers/worker-pool.js';
 import { initializeSocket } from './socket/socket.js';
 import { redisSubscriberService } from './services/redisSubscriber.service.js';
+import { startPerformanceLogger, stopPerformanceLogger } from './utils/performanceLogger.js';
 
 let server;
 
@@ -35,11 +36,16 @@ async function startServer() {
       logger.info(
         `🚀 FleetDash Backend listening on port ${config.port} in ${config.nodeEnv} mode`,
       );
+      // Start logging performance metrics every 30 seconds
+      startPerformanceLogger();
     });
 
     // 8. Setup signal interceptors for graceful shutdowns
     const handleShutdown = async (signal) => {
       logger.warn(`Received ${signal}. Starting graceful shutdown...`);
+
+      // Stop performance logger
+      stopPerformanceLogger();
 
       // Close Express Server first to stop accepting new requests
       if (server) {
