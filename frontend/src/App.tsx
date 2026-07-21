@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { TelemetryProvider } from './context/TelemetryContext';
-import { DashboardLayout } from './layouts/DashboardLayout';
+import { DashboardLayout } from './components/layout/DashboardLayout';
 import { Dashboard } from './pages/Dashboard';
 import { LiveMap } from './pages/LiveMap';
 import { Vehicles } from './pages/Vehicles';

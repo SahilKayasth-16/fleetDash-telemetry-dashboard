@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import { useTelemetry } from '../../../hooks/useTelemetry';
-import useMap from '../hooks/useMap';
+import { useTelemetry } from '../../hooks/useTelemetry';
+import useMap from './hooks/useMap';
 import MapContainer from './MapContainer';
 import MapPlaceholder from './MapPlaceholder';
 import VehicleLayer from './VehicleLayer';

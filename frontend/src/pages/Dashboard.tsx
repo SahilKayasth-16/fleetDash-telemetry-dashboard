@@ -1,5 +1,5 @@
 import React from 'react';
-import FleetMap from '../features/map/components/FleetMap';
+import FleetMap from '../components/map/FleetMap';
 import FleetStatsCards from '../components/dashboard/FleetStatsCards';
 import VehicleListPanel from '../components/dashboard/VehicleListPanel';
 import RecentEventsPanel from '../components/dashboard/RecentEventsPanel';

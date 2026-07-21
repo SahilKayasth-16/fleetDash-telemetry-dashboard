@@ -99,7 +99,10 @@ export class MockCanvasRenderer implements ICanvasRenderer {
     }
   }
 
-  render(vehicles: any[], viewport: MapViewport): void {
+  render(
+    vehicles: Array<{ id: string; lat: number; lng: number; heading: number; status: string }>,
+    viewport: MapViewport
+  ): void {
     if (!this.ctx || !this.canvas) return;
     this.clear();
     

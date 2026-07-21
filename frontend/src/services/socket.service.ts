@@ -63,7 +63,7 @@ class SocketService {
     });
 
     // Custom telemetry stream payload events (binary serialized Buffer)
-    this.socket.on('telemetry:update', (binaryData: any) => {
+    this.socket.on('telemetry:update', (binaryData: unknown) => {
       try {
         const decoded = deserializeTelemetry(binaryData);
         this.telemetryCallbacks.forEach((cb) => cb(decoded));
@@ -73,12 +73,12 @@ class SocketService {
     });
 
     // Gateway server status updates
-    this.socket.on('server:status', (data: any) => {
+    this.socket.on('server:status', (data: { status: string; connectedClients: number; timestamp: string }) => {
       this.statusCallbacks.forEach((cb) => cb(data));
     });
 
     // Heartbeat ack response from backend server to calculate latency
-    this.socket.on('heartbeat:ack', (data: any) => {
+    this.socket.on('heartbeat:ack', (data: { receivedAt: string; clientTime: string }) => {
       if (data && data.clientTime) {
         const latency = Date.now() - new Date(data.clientTime).getTime();
         this.latencyCallbacks.forEach((cb) => cb(latency));

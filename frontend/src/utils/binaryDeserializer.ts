@@ -4,19 +4,19 @@ import { VehicleTelemetry } from '../types/telemetry';
  * Deserializes a binary payload back into a telemetry object.
  * Supports ArrayBuffer, Uint8Array/Buffer, or JSON-serialized Buffer objects.
  */
-export function deserializeTelemetry(data: any): VehicleTelemetry {
+export function deserializeTelemetry(data: unknown): VehicleTelemetry {
   let arrayBuffer: ArrayBuffer;
 
   if (data instanceof ArrayBuffer) {
     arrayBuffer = data;
-  } else if (data && data.buffer instanceof ArrayBuffer) {
+  } else if (data && typeof data === 'object' && 'buffer' in data && (data as { buffer: unknown }).buffer instanceof ArrayBuffer) {
     const typedArray = data as Uint8Array;
     arrayBuffer = (typedArray.buffer as ArrayBuffer).slice(
       typedArray.byteOffset,
       typedArray.byteOffset + typedArray.byteLength
     );
-  } else if (data && typeof data === 'object' && data.type === 'Buffer' && Array.isArray(data.data)) {
-    arrayBuffer = new Uint8Array(data.data).buffer as ArrayBuffer;
+  } else if (data && typeof data === 'object' && 'type' in data && (data as { type: unknown }).type === 'Buffer' && 'data' in data && Array.isArray((data as { data: unknown }).data)) {
+    arrayBuffer = new Uint8Array((data as { data: number[] }).data).buffer as ArrayBuffer;
   } else {
     throw new Error('Unsupported binary data type for telemetry deserialization');
   }

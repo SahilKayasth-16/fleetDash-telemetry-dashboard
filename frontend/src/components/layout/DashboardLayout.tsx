@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Sidebar } from '../components/layout/Sidebar';
-import { Navbar } from '../components/layout/Navbar';
+import { Sidebar } from './Sidebar';
+import { Navbar } from './Navbar';
 import styles from './DashboardLayout.module.css';
 
 export const DashboardLayout: React.FC = () => {
