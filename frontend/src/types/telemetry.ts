@@ -18,12 +18,13 @@ export interface Vehicle {
   heading: number;
   status: VehicleStatus;
   lastUpdated: string;
+  lastUpdatedTime: number;
   latitude: number;
   longitude: number;
 }
 
 export type EventSeverity = 'info' | 'warning' | 'critical' | 'success';
-export type EventType = 'geofence_entry' | 'geofence_exit' | 'overspeed' | 'sensor_reading' | 'hardware_fault';
+export type EventType = 'geofence_entry' | 'geofence_exit' | 'overspeed' | 'sensor_reading' | 'hardware_fault' | 'telemetry_received';
 
 export interface TelemetryEvent {
   id: string;

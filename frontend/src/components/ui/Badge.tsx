@@ -8,7 +8,7 @@ interface BadgeProps {
   className?: string;
 }
 
-export const Badge: React.FC<BadgeProps> = ({
+export const Badge: React.FC<BadgeProps> = React.memo(({
   severity = 'info',
   pulse = false,
   children,
@@ -31,6 +31,8 @@ export const Badge: React.FC<BadgeProps> = ({
       {children}
     </span>
   );
-};
+});
+
+Badge.displayName = 'Badge';
 
 export default Badge;

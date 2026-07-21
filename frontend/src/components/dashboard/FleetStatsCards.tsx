@@ -5,7 +5,7 @@ import StatCard from '../ui/StatCard';
 import IconWrapper from '../ui/IconWrapper';
 
 export const FleetStatsCards: React.FC = React.memo(() => {
-  const { state } = useTelemetry();
+  const { state, connectionStatus } = useTelemetry();
   const { stats } = state;
 
   return (
@@ -50,13 +50,13 @@ export const FleetStatsCards: React.FC = React.memo(() => {
       />
 
       <StatCard
-        title="Online Gateways"
-        value={stats.onlineConnections}
-        trend={stats.connectionsTrend}
-        trendType="positive"
-        glow="cyan"
+        title="Connection Status"
+        value={connectionStatus.toUpperCase()}
+        trend={`${stats.onlineConnections} active gateway connections`}
+        trendType={connectionStatus === 'connected' ? 'positive' : 'negative'}
+        glow={connectionStatus === 'connected' ? 'cyan' : 'purple'}
         icon={
-          <IconWrapper theme="success" size="md">
+          <IconWrapper theme={connectionStatus === 'connected' ? 'success' : 'warning'} size="md">
             <Wifi size={18} />
           </IconWrapper>
         }

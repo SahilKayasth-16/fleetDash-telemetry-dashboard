@@ -23,6 +23,7 @@ export type TelemetryAction =
       type: 'BATCH_UPDATE_TELEMETRY'; 
       payload: { 
         vehicles: Vehicle[]; 
+        events: TelemetryEvent[];
         newEventsCount: number; 
       } 
     };
@@ -46,12 +47,18 @@ const telemetryReducer = (state: TelemetryState, action: TelemetryAction): Telem
       };
     case 'UPDATE_VEHICLE': {
       const exists = state.vehicles.some((v) => v.id === action.payload.id);
-      const newVehicles = exists
+      const nextVehicles = exists
         ? state.vehicles.map((v) => (v.id === action.payload.id ? action.payload : v))
         : [...state.vehicles, action.payload];
+      
+      // Sort vehicles by lastUpdatedTime descending
+      const sortedVehicles = nextVehicles.sort(
+        (a, b) => (b.lastUpdatedTime || 0) - (a.lastUpdatedTime || 0)
+      );
+
       return {
         ...state,
-        vehicles: newVehicles,
+        vehicles: sortedVehicles,
       };
     }
     case 'ADD_EVENT':
@@ -60,19 +67,28 @@ const telemetryReducer = (state: TelemetryState, action: TelemetryAction): Telem
         events: [action.payload, ...state.events].slice(0, 50),
       };
     case 'BATCH_UPDATE_TELEMETRY': {
-      const { vehicles: updatedVehicles, newEventsCount } = action.payload;
+      const { vehicles: updatedVehicles, events: newEvents, newEventsCount } = action.payload;
 
       // 1. Map existing vehicles for fast update checks
       const vehicleMap = new Map(state.vehicles.map((v) => [v.id, v]));
       updatedVehicles.forEach((v) => {
         vehicleMap.set(v.id, v);
       });
-      const nextVehicles = Array.from(vehicleMap.values());
+      
+      // Sort vehicles so the most recently updated ones are at the top
+      const nextVehicles = Array.from(vehicleMap.values()).sort(
+        (a, b) => (b.lastUpdatedTime || 0) - (a.lastUpdatedTime || 0)
+      );
 
-      // 2. Re-calculate metrics
+      // 2. Prepend events and cap at 50
+      const nextEvents = [...newEvents, ...state.events].slice(0, 50);
+
+      // 3. Re-calculate metrics
       const totalEvents = state.stats.totalTelemetryEvents + newEventsCount;
+      
+      // Count unique vehicleIds currently received that are active/stopped (not offline)
       const activeVehiclesCount = nextVehicles.filter(
-        (v) => v.status !== 'offline' && v.status !== 'stopped'
+        (v) => v.status !== 'offline'
       ).length;
 
       const onlineVehicles = nextVehicles.filter((v) => v.status !== 'offline');
@@ -83,6 +99,7 @@ const telemetryReducer = (state: TelemetryState, action: TelemetryAction): Telem
       return {
         ...state,
         vehicles: nextVehicles,
+        events: nextEvents,
         stats: {
           ...state.stats,
           totalTelemetryEvents: totalEvents,
@@ -124,6 +141,7 @@ export const TelemetryProvider: React.FC<{ children: ReactNode }> = ({ children 
   // Performance-critical refs to buffer high-frequency streams
   const vehiclesBufferRef = useRef<Map<string, Vehicle>>(new Map());
   const telemetryBufferRef = useRef<VehicleTelemetry[]>([]);
+  const eventsBufferRef = useRef<TelemetryEvent[]>([]);
   const newEventsCounterRef = useRef<number>(0);
   const stateVehiclesRef = useRef<Vehicle[]>(state.vehicles);
 
@@ -203,6 +221,8 @@ export const TelemetryProvider: React.FC<{ children: ReactNode }> = ({ children 
         status = 'warning';
       }
 
+      const lastUpdatedTime = new Date(telemetry.timestamp).getTime();
+
       const updatedVehicle: Vehicle = {
         id: telemetry.vehicleId,
         driverName,
@@ -210,11 +230,29 @@ export const TelemetryProvider: React.FC<{ children: ReactNode }> = ({ children 
         heading: telemetry.heading,
         status,
         lastUpdated: 'Just now',
+        lastUpdatedTime,
         latitude: telemetry.latitude,
         longitude: telemetry.longitude,
       };
 
       vehiclesBufferRef.current.set(telemetry.vehicleId, updatedVehicle);
+
+      // Generate a structured event for this telemetry update
+      const eventId = `EV-${telemetry.vehicleId}-${lastUpdatedTime}-${Math.floor(Math.random() * 1000)}`;
+      const eventTime = new Date(telemetry.timestamp).toLocaleTimeString();
+      const speedStr = `${telemetry.speed} MPH`;
+      const coordsStr = `[${telemetry.latitude.toFixed(4)}, ${telemetry.longitude.toFixed(4)}]`;
+
+      const newEvent: TelemetryEvent = {
+        id: eventId,
+        timestamp: eventTime,
+        vehicleId: telemetry.vehicleId,
+        eventType: 'telemetry_received',
+        description: `Ingested update: Speed ${speedStr} | Coordinates ${coordsStr}`,
+        severity: telemetry.speed > 80 ? 'warning' : telemetry.speed === 0 ? 'info' : 'success',
+      };
+
+      eventsBufferRef.current.push(newEvent);
     });
 
     // Open connection
@@ -234,6 +272,7 @@ export const TelemetryProvider: React.FC<{ children: ReactNode }> = ({ children 
     const flushInterval = setInterval(() => {
       const hasVehicles = vehiclesBufferRef.current.size > 0;
       const telemetryBatch = [...telemetryBufferRef.current];
+      const bufferedEvents = [...eventsBufferRef.current];
 
       if (hasVehicles || telemetryBatch.length > 0) {
         const bufferedVehicles = Array.from(vehiclesBufferRef.current.values());
@@ -242,18 +281,18 @@ export const TelemetryProvider: React.FC<{ children: ReactNode }> = ({ children 
         // Clear buffering stores
         vehiclesBufferRef.current.clear();
         telemetryBufferRef.current = [];
+        eventsBufferRef.current = [];
         newEventsCounterRef.current = 0;
 
-        // Apply state updates to vehicle list and statistics
-        if (hasVehicles) {
-          dispatch({
-            type: 'BATCH_UPDATE_TELEMETRY',
-            payload: {
-              vehicles: bufferedVehicles,
-              newEventsCount: count,
-            },
-          });
-        }
+        // Apply state updates to vehicle list, events list, and statistics
+        dispatch({
+          type: 'BATCH_UPDATE_TELEMETRY',
+          payload: {
+            vehicles: bufferedVehicles,
+            events: bufferedEvents,
+            newEventsCount: count,
+          },
+        });
 
         // Apply state updates to real-time streams log
         setLatestTelemetry((prev) => [...telemetryBatch, ...prev].slice(0, 100));

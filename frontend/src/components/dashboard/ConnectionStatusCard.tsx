@@ -6,17 +6,17 @@ import MetricItem from '../ui/MetricItem';
 import styles from './ConnectionStatusCard.module.css';
 
 export const ConnectionStatusCard: React.FC = React.memo(() => {
-  const { state } = useTelemetry();
-  const { connection } = state;
+  const { state, connectionStatus, lastReceivedTimestamp, connectionError } = useTelemetry();
+  const { connection, stats } = state;
 
   const pulseClass = 
-    !connection.socketConnected ? styles.pulseOffline :
-    connection.networkQuality === 'excellent' ? styles.pulseExcellent :
-    connection.networkQuality === 'good' ? styles.pulseGood : styles.pulsePoor;
+    connectionStatus === 'connected'
+      ? (connection.networkQuality === 'excellent' ? styles.pulseExcellent : connection.networkQuality === 'good' ? styles.pulseGood : styles.pulsePoor)
+      : (connectionStatus === 'connecting' || connectionStatus === 'reconnecting' ? styles.pulseGood : styles.pulseOffline);
 
-  const statusLabel = connection.socketConnected 
+  const statusLabel = connectionStatus === 'connected' 
     ? `CONNECTED (${connection.networkQuality.toUpperCase()})` 
-    : 'DISCONNECTED';
+    : connectionStatus.toUpperCase();
 
   return (
     <Panel title="Network Diagnostics" metaText="Live Event Socket" glowTitle>
@@ -37,13 +37,11 @@ export const ConnectionStatusCard: React.FC = React.memo(() => {
                 <Signal size={12} /> Network Quality
               </span>
             }
-            value={connection.networkQuality.toUpperCase()}
+            value={connectionStatus === 'connected' ? connection.networkQuality.toUpperCase() : 'OFFLINE'}
             statusColor={
-              connection.networkQuality === 'excellent' || connection.networkQuality === 'good' 
-                ? 'success' 
-                : connection.networkQuality === 'poor' 
-                ? 'warning' 
-                : 'error'
+              connectionStatus === 'connected'
+                ? (connection.networkQuality === 'excellent' || connection.networkQuality === 'good' ? 'success' : 'warning')
+                : 'muted'
             }
           />
 
@@ -54,8 +52,8 @@ export const ConnectionStatusCard: React.FC = React.memo(() => {
                 <Activity size={12} /> Connection Latency
               </span>
             }
-            value={`${connection.networkLatency} ms`}
-            progress={connection.networkLatency === 0 ? 0 : Math.max(5, 100 - (connection.networkLatency / 2))}
+            value={connectionStatus === 'connected' ? `${connection.networkLatency} ms` : 'N/A'}
+            progress={connectionStatus === 'connected' ? (connection.networkLatency === 0 ? 0 : Math.max(5, 100 - (connection.networkLatency / 2))) : 0}
             progressColor={connection.networkLatency < 10 ? 'success' : connection.networkLatency < 50 ? 'blue' : 'warning'}
           />
 
@@ -63,12 +61,28 @@ export const ConnectionStatusCard: React.FC = React.memo(() => {
           <MetricItem
             label={
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <Clock size={12} /> Last Handshake
+                <Clock size={12} /> Last Message Time
               </span>
             }
-            value={connection.lastUpdate}
-            statusColor={connection.socketConnected ? 'info' : 'muted'}
+            value={lastReceivedTimestamp ? new Date(lastReceivedTimestamp).toLocaleTimeString() : 'No messages'}
+            statusColor={connectionStatus === 'connected' ? 'info' : 'muted'}
           />
+
+          {/* Messages count */}
+          <MetricItem
+            label="Messages Received"
+            value={stats.totalTelemetryEvents.toLocaleString()}
+            statusColor="info"
+          />
+
+          {/* Diagnostics info */}
+          {connectionError && (
+            <MetricItem
+              label="Diagnostics Info"
+              value={connectionError}
+              statusColor="warning"
+            />
+          )}
         </div>
       </div>
     </Panel>

@@ -65,8 +65,8 @@
 
 .statsGrid {
   display: grid;
-  grid-template-columns: 80px 80px;
-  gap: 16px;
+  grid-template-columns: 70px 70px 115px;
+  gap: 12px;
   margin-top: 8px;
 }
 
