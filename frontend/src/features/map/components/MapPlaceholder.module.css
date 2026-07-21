@@ -1,0 +1,86 @@
+/* MapPlaceholder.module.css */
+
+.viewport {
+  position: absolute;
+  inset: 0;
+  background: #04060b;
+  overflow: hidden;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+/* Conic gradient radar sweep rotating line */
+.radarSweep {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 250%;
+  height: 250%;
+  background: conic-gradient(from 0deg, rgba(0, 240, 255, 0.08) 0deg, rgba(0, 240, 255, 0) 90deg);
+  transform-origin: center center;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: radarRotate 16s linear infinite;
+}
+
+@keyframes radarRotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Radar rings */
+.radarRings {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(0, 240, 255, 0.04);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.ring1 { width: 150px; height: 150px; }
+.ring2 { width: 300px; height: 300px; }
+.ring3 { width: 450px; height: 450px; }
+
+/* Compass overlay styling */
+.compass {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(7, 9, 14, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+  padding: 6px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+/* USA outline coordinates indicator mapping sectors */
+.sectorTag {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.sectorNW { top: 20px; left: 100px; }
+.sectorNE { top: 20px; right: 100px; }
+.sectorSW { bottom: 20px; left: 100px; }
+.sectorSE { bottom: 20px; right: 100px; }

@@ -1,26 +1,31 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Sidebar } from '../components/Sidebar';
-import { TopNav } from '../components/TopNav';
+import { Sidebar } from '../components/layout/Sidebar';
+import { Navbar } from '../components/layout/Navbar';
+import styles from './DashboardLayout.module.css';
 
 export const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-slate-950">
-      {/* Sidebar drawer */}
-      <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
+    <div className={styles.layoutContainer}>
+      {/* High-tech overlay grid */}
+      <div className="hud-grid-overlay" />
 
-      {/* Main viewport */}
-      <div className="flex flex-1 flex-col overflow-hidden">
-        {/* Top header navigation */}
-        <TopNav onMenuClick={() => setSidebarOpen(true)} />
+      {/* Top Header Navigation */}
+      <Navbar onMenuClick={() => setSidebarOpen(true)} />
+
+      {/* Main Viewport Split Area */}
+      <div className={styles.mainViewport}>
+        <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
 
         {/* Dynamic page contents scroll area */}
-        <main className="flex-1 overflow-y-auto p-6 bg-slate-950">
+        <main className={styles.pageContentScroll}>
           <Outlet />
         </main>
       </div>
     </div>
   );
 };
+
+export default DashboardLayout;

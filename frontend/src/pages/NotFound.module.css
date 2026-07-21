@@ -1,0 +1,56 @@
+/* NotFound.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  padding: 24px;
+  animation: slideUp var(--transition-slow) forwards;
+}
+
+.iconBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  color: var(--color-neon-cyan);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm), 0 0 15px rgba(0, 240, 255, 0.1);
+  margin-bottom: 24px;
+}
+
+.errorCode {
+  font-family: var(--font-primary);
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.errorTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.errorDesc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  max-width: 360px;
+  line-height: 1.5;
+  margin-top: 12px;
+}
+
+.actions {
+  margin-top: 32px;
+}

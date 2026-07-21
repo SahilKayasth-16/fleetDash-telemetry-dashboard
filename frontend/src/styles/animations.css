@@ -1,0 +1,116 @@
+/* animations.css */
+
+/* Core fade in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Page or card entry slide-up */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Telemetry beacon pulse */
+@keyframes beaconPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 var(--color-success-glow);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.9);
+    box-shadow: 0 0 8px 3px var(--color-success-glow);
+  }
+}
+
+/* Warning alert beacon pulse */
+@keyframes warningPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.92);
+  }
+}
+
+/* Cyan glowing text pulse */
+@keyframes cyanGlowText {
+  0%, 100% {
+    text-shadow: 0 0 4px rgba(0, 240, 255, 0.2), 0 0 10px rgba(0, 240, 255, 0.1);
+  }
+  50% {
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.6), 0 0 20px rgba(0, 240, 255, 0.3);
+  }
+}
+
+/* Grid overlay scanner scanline */
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Slow rotation for HUD elements (e.g. compass) */
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Glitch slide/flicker simulation */
+@keyframes glitchFlicker {
+  0%, 100% { opacity: 0.95; }
+  33% { opacity: 0.8; }
+  66% { opacity: 1; }
+  90% { opacity: 0.9; }
+}
+
+/* Hover glow borders */
+@keyframes borderGlowPulse {
+  0%, 100% {
+    border-color: rgba(0, 240, 255, 0.2);
+    box-shadow: 0 0 5px rgba(0, 240, 255, 0.05);
+  }
+  50% {
+    border-color: rgba(0, 240, 255, 0.5);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+  }
+}
+
+/* Animation utilities classes */
+.anim-fade-in {
+  animation: fadeIn var(--transition-normal) forwards;
+}
+
+.anim-slide-up {
+  animation: slideUp var(--transition-slow) forwards;
+}
+
+.anim-spin-slow {
+  animation: spinSlow 30s linear infinite;
+}
+
+.anim-pulse-success {
+  animation: beaconPulse 2s infinite ease-in-out;
+}

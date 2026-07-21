@@ -1,0 +1,78 @@
+/* variables.css */
+
+:root {
+  /* Color Palette - Cyberpunk / Mission Control Theme */
+  --bg-dark-primary: #07090e;      /* Deepest space background */
+  --bg-dark-secondary: #0d111a;    /* Panel/Section background */
+  --bg-dark-tertiary: #131926;     /* Card background */
+  
+  /* Glassmorphism Bases */
+  --bg-glass: rgba(13, 17, 26, 0.55);
+  --bg-glass-hover: rgba(20, 26, 40, 0.75);
+  --bg-glass-active: rgba(26, 34, 52, 0.85);
+  
+  /* Neon Accents & Glows */
+  --color-neon-blue: #0088ff;
+  --color-neon-blue-rgb: 0, 136, 255;
+  --color-neon-blue-glow: rgba(0, 136, 255, 0.35);
+
+  --color-neon-cyan: #00f0ff;
+  --color-neon-cyan-rgb: 0, 240, 255;
+  --color-neon-cyan-glow: rgba(0, 240, 255, 0.35);
+
+  --color-neon-purple: #ae00ff;
+  --color-neon-purple-rgb: 174, 0, 255;
+  --color-neon-purple-glow: rgba(174, 0, 255, 0.35);
+  
+  /* Semantic Status Colors */
+  --color-success: #00ffd2;
+  --color-success-glow: rgba(0, 255, 210, 0.25);
+  --color-warning: #ffb700;
+  --color-warning-glow: rgba(255, 183, 0, 0.25);
+  --color-error: #ff0055;
+  --color-error-glow: rgba(255, 0, 85, 0.25);
+  --color-info: #00c8ff;
+  --color-info-glow: rgba(0, 200, 255, 0.25);
+
+  /* Typography Colors */
+  --text-primary: #f1f5f9;         /* Off-white */
+  --text-secondary: #94a3b8;       /* Slate 400 */
+  --text-muted: #475569;          /* Slate 600 */
+  --text-neon-cyan: #00f0ff;
+  --text-neon-purple: #e099ff;
+
+  /* Borders & Outlines */
+  --border-subtle: 1px solid rgba(255, 255, 255, 0.05);
+  --border-glass: 1px solid rgba(255, 255, 255, 0.08);
+  --border-neon-cyan: 1px solid rgba(0, 240, 255, 0.25);
+  --border-neon-purple: 1px solid rgba(174, 0, 255, 0.25);
+  --border-neon-blue: 1px solid rgba(0, 136, 255, 0.25);
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.7);
+  --shadow-neon-cyan: 0 0 15px rgba(0, 240, 255, 0.15);
+  --shadow-neon-purple: 0 0 15px rgba(174, 0, 255, 0.15);
+
+  /* Layout Dimensions */
+  --navbar-height: 64px;
+  --sidebar-width-expanded: 260px;
+  --sidebar-width-collapsed: 72px;
+  --grid-gap: 20px;
+
+  /* Fonts */
+  --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Courier New', Courier, monospace;
+
+  /* Borders Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* Transitions */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}

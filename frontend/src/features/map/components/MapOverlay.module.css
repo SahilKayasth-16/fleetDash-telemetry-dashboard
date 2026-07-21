@@ -1,0 +1,120 @@
+/* MapOverlay.module.css */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.mapHudTopLeft {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(7, 9, 14, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+}
+
+.hudActiveTitle {
+  color: var(--color-neon-cyan);
+  font-weight: bold;
+}
+
+/* Selected Vehicle Detail Card Box */
+.selectedCard {
+  pointer-events: auto;
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  width: 280px;
+  background: rgba(7, 9, 14, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: var(--border-neon-cyan);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: var(--shadow-lg), 0 0 15px rgba(0, 240, 255, 0.1);
+  animation: slideInUp var(--transition-fast) forwards;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 8px;
+}
+
+.cardTitle {
+  font-family: var(--font-primary);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+}
+
+.closeButton {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.closeButton:hover {
+  color: var(--color-error);
+  background: rgba(255, 0, 85, 0.05);
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+}
+
+.label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.val {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.monoVal {
+  font-family: var(--font-mono);
+}

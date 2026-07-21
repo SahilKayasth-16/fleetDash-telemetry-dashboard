@@ -1,0 +1,64 @@
+/* MapLegend.module.css */
+
+.legend {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(7, 9, 14, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  display: flex;
+  gap: 12px;
+  box-shadow: var(--shadow-sm);
+  z-index: 15;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .legend {
+    display: none; /* Hide on mobile to conserve screen space */
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-primary);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  box-shadow: 0 0 6px currentColor;
+}
+
+.dot_active {
+  color: var(--color-success);
+  background-color: var(--color-success);
+}
+
+.dot_warning {
+  color: var(--color-warning);
+  background-color: var(--color-warning);
+}
+
+.dot_stopped {
+  color: var(--color-info);
+  background-color: var(--color-info);
+}
+
+.dot_offline {
+  color: var(--text-muted);
+  background-color: var(--text-muted);
+  box-shadow: none;
+}

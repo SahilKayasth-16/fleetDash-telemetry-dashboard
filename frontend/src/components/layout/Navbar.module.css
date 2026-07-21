@@ -1,0 +1,211 @@
+/* Navbar.module.css */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--navbar-height);
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.leftSection {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.menuButton {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.menuButton:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+@media (max-width: 1024px) {
+  .menuButton {
+    display: inline-flex;
+  }
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logoBox {
+  width: 36px;
+  height: 36px;
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid var(--color-neon-cyan);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-neon-cyan);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.25);
+  transition: all var(--transition-normal);
+}
+
+.logoContainer:hover .logoBox {
+  color: #ffffff;
+  background: var(--color-neon-cyan);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+  transform: rotate(5deg) scale(1.05);
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-family: var(--font-primary);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--color-neon-blue);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.envBadge {
+  background: rgba(255, 183, 0, 0.08);
+  border: 1px solid rgba(255, 183, 0, 0.3);
+  color: var(--color-warning);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 8px rgba(255, 183, 0, 0.1);
+}
+
+@media (max-width: 640px) {
+  .envBadge {
+    display: none;
+  }
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.iconButton {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+}
+
+.iconButton:hover {
+  color: var(--color-neon-cyan);
+  background: rgba(0, 240, 255, 0.05);
+  border-color: rgba(0, 240, 255, 0.15);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+}
+
+.badgeDot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-error);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--color-error);
+}
+
+.userPanel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 12px;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(174, 0, 255, 0.15);
+  border: 1px solid var(--color-neon-purple);
+  box-shadow: 0 0 8px rgba(174, 0, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.avatar:hover {
+  box-shadow: 0 0 12px var(--color-neon-purple);
+  border-color: #ffffff;
+  transform: scale(1.05);
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.userRole {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .userInfo {
+    display: none;
+  }
+}

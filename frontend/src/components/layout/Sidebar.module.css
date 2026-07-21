@@ -1,0 +1,229 @@
+/* Sidebar.module.css */
+
+/* Mobile overlay backdrop */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 6, 10, 0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 90;
+  transition: opacity var(--transition-normal);
+}
+
+/* Sidebar Drawer Container */
+.sidebar {
+  position: fixed;
+  top: var(--navbar-height);
+  bottom: 0;
+  left: 0;
+  background: var(--bg-dark-secondary);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  z-index: 95;
+  transition: width var(--transition-normal), transform var(--transition-normal);
+  overflow: hidden;
+}
+
+/* Expanded state on desktop */
+.expanded {
+  width: var(--sidebar-width-expanded);
+}
+
+/* Collapsed state on desktop */
+.collapsed {
+  width: var(--sidebar-width-collapsed);
+}
+
+/* Responsive visibility states */
+@media (min-width: 1025px) {
+  .sidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    top: 0;
+    width: var(--sidebar-width-expanded);
+    transform: translateX(-100%);
+  }
+  
+  .mobileOpen {
+    transform: translateX(0);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* Navigation items container */
+.nav {
+  flex: 1;
+  padding: 24px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+/* Collapsed navigation link styles */
+.collapsed .navLink {
+  justify-content: center;
+  padding: 12px;
+  gap: 0;
+}
+
+/* Active navigation item styling (only active for Dashboard in this baseline phase) */
+.activeLink {
+  background: rgba(0, 240, 255, 0.04);
+  border-color: rgba(0, 240, 255, 0.15);
+  color: var(--color-neon-cyan);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.05);
+  text-shadow: 0 0 6px rgba(0, 240, 255, 0.4);
+}
+
+.activeLink svg {
+  color: var(--color-neon-cyan);
+  filter: drop-shadow(0 0 4px rgba(0, 240, 255, 0.5));
+}
+
+/* Inactive links hover effect */
+.navLink:hover:not(.activeLink):not(.disabledLink) {
+  background: rgba(255, 255, 255, 0.03);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Disabled styling for future links */
+.disabledLink {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.label {
+  transition: opacity var(--transition-normal);
+}
+
+.collapsed .label {
+  opacity: 0;
+  width: 0;
+  display: none;
+}
+
+/* Sidebar toggle expand/collapse footer area */
+.footer {
+  padding: 16px 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.toggleButton {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: all var(--transition-fast);
+}
+
+.toggleButton:hover {
+  background: rgba(0, 240, 255, 0.04);
+  color: var(--color-neon-cyan);
+  border-color: rgba(0, 240, 255, 0.15);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+}
+
+.collapsed .toggleButton {
+  padding: 10px;
+  gap: 0;
+}
+
+.collapsed .toggleText {
+  display: none;
+}
+
+/* Small telemetry network node badge */
+.nodeBadge {
+  background: rgba(0, 255, 210, 0.04);
+  border: 1px solid rgba(0, 255, 210, 0.2);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all var(--transition-normal);
+}
+
+.collapsed .nodeBadge {
+  justify-content: center;
+  padding: 8px;
+}
+
+.nodeLight {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-success);
+  box-shadow: 0 0 8px var(--color-success);
+}
+
+.nodeInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.collapsed .nodeInfo {
+  display: none;
+}
+
+.nodeTitle {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.nodeStatus {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--color-success);
+}

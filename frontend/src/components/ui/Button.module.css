@@ -1,0 +1,121 @@
+/* Button.module.css */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-primary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  white-space: nowrap;
+  outline: none;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Sizes */
+.sm {
+  padding: 6px 12px;
+  font-size: 0.7rem;
+}
+
+.md {
+  padding: 10px 20px;
+  font-size: 0.8rem;
+}
+
+.lg {
+  padding: 14px 28px;
+  font-size: 0.9rem;
+}
+
+/* Primary Variant (Neon Cyan Glow) */
+.primary {
+  background: var(--color-neon-cyan);
+  color: var(--bg-dark-primary);
+  border: 1px solid var(--color-neon-cyan);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+}
+
+.primary:hover:not(:disabled) {
+  background: #ffffff;
+  border-color: #ffffff;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.5), 0 0 4px #ffffff;
+  transform: translateY(-1px);
+}
+
+.primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Secondary Variant (Outline Neon Cyan) */
+.secondary {
+  background: transparent;
+  color: var(--color-neon-cyan);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+}
+
+.secondary:hover:not(:disabled) {
+  background: rgba(0, 240, 255, 0.1);
+  border-color: var(--color-neon-cyan);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Purple Variant */
+.purple {
+  background: var(--color-neon-purple);
+  color: #ffffff;
+  border: 1px solid var(--color-neon-purple);
+  box-shadow: 0 0 10px rgba(174, 0, 255, 0.25);
+}
+
+.purple:hover:not(:disabled) {
+  background: #ffffff;
+  color: var(--bg-dark-primary);
+  border-color: #ffffff;
+  box-shadow: 0 0 20px rgba(174, 0, 255, 0.5), 0 0 4px #ffffff;
+  transform: translateY(-1px);
+}
+
+/* Danger Variant */
+.danger {
+  background: var(--color-error);
+  color: #ffffff;
+  border: 1px solid var(--color-error);
+  box-shadow: 0 0 10px rgba(255, 0, 85, 0.25);
+}
+
+.danger:hover:not(:disabled) {
+  background: #ff3377;
+  box-shadow: 0 0 15px rgba(255, 0, 85, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Ghost Variant */
+.ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+}
+
+.ghost:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+/* Glowing text option */
+.textGlow {
+  text-shadow: 0 0 8px currentColor;
+}

@@ -1,27 +1,37 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { TelemetryProvider } from './context/TelemetryContext';
 import { DashboardLayout } from './layouts/DashboardLayout';
 import { Dashboard } from './pages/Dashboard';
 import { LiveMap } from './pages/LiveMap';
+import { Vehicles } from './pages/Vehicles';
 import { Telemetry } from './pages/Telemetry';
-import { Alerts } from './pages/Alerts';
+import { Analytics } from './pages/Analytics';
 import { Settings } from './pages/Settings';
-import { NotFound } from './pages/NotFound';
 
 export const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<DashboardLayout />}>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/map" element={<LiveMap />} />
-          <Route path="/telemetry" element={<Telemetry />} />
-          <Route path="/alerts" element={<Alerts />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <TelemetryProvider>
+      <BrowserRouter future={{ v7_relativeSplatPath: true }}>
+        <Routes>
+          <Route element={<DashboardLayout />}>
+            {/* Redirect root page to /dashboard */}
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            
+            {/* Active application pages */}
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/live-map" element={<LiveMap />} />
+            <Route path="/vehicles" element={<Vehicles />} />
+            <Route path="/telemetry" element={<Telemetry />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/settings" element={<Settings />} />
+            
+            {/* Redirect any unknown route to /dashboard */}
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </TelemetryProvider>
   );
 };
 

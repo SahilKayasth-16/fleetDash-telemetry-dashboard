@@ -1,0 +1,79 @@
+/* ConnectionStatusCard.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.indicatorRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 12px;
+}
+
+.connectionState {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-primary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+}
+
+.pulseDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.pulseExcellent {
+  background-color: var(--color-success);
+  box-shadow: 0 0 10px var(--color-success), 0 0 20px var(--color-success-glow);
+  animation: connectionPulse 1.5s infinite ease-in-out;
+}
+
+.pulseGood {
+  background-color: var(--color-info);
+  box-shadow: 0 0 10px var(--color-info), 0 0 20px var(--color-info-glow);
+  animation: connectionPulse 1.8s infinite ease-in-out;
+}
+
+.pulsePoor {
+  background-color: var(--color-warning);
+  box-shadow: 0 0 10px var(--color-warning), 0 0 20px var(--color-warning-glow);
+  animation: connectionPulse 2.2s infinite ease-in-out;
+}
+
+.pulseOffline {
+  background-color: var(--color-error);
+  box-shadow: 0 0 10px var(--color-error), 0 0 20px var(--color-error-glow);
+  animation: connectionPulse 1.2s infinite ease-in-out;
+}
+
+@keyframes connectionPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.9);
+  }
+}
+
+.statusLabel {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

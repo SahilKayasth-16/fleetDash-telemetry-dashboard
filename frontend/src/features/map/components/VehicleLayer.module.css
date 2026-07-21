@@ -1,0 +1,104 @@
+/* VehicleLayer.module.css */
+
+.layer {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+}
+
+.marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  transition: transform var(--transition-fast);
+}
+
+.marker:hover {
+  transform: translate(-50%, -50%) scale(1.15);
+  z-index: 50;
+}
+
+/* Base dot representing coordinates point */
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transition: all var(--transition-fast);
+}
+
+/* Status colors */
+.dot_active {
+  background-color: var(--color-success);
+  box-shadow: 0 0 8px var(--color-success), 0 0 16px var(--color-success-glow);
+}
+.dot_warning {
+  background-color: var(--color-warning);
+  box-shadow: 0 0 8px var(--color-warning), 0 0 16px var(--color-warning-glow);
+}
+.dot_stopped {
+  background-color: var(--color-info);
+  box-shadow: 0 0 8px var(--color-info), 0 0 16px var(--color-info-glow);
+}
+.dot_offline {
+  background-color: var(--text-muted);
+}
+
+/* Small heading pointer line pointing in vehicle direction */
+.headingPointer {
+  position: absolute;
+  width: 2px;
+  height: 8px;
+  background-color: #ffffff;
+  top: -4px;
+  transform-origin: bottom center;
+  opacity: 0.6;
+}
+
+/* Selection ring */
+.selectionRing {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 1.5px dashed var(--color-neon-cyan);
+  border-radius: 50%;
+  animation: rotateSelection 6s linear infinite;
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
+}
+
+@keyframes rotateSelection {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Simple ID tooltip shown on marker hover */
+.tooltip {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(7, 9, 14, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  padding: 1px 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.marker:hover .tooltip {
+  opacity: 1;
+}
+
+.selectedTooltip {
+  opacity: 1 !important;
+  border-color: var(--color-neon-cyan);
+}

@@ -1,0 +1,97 @@
+/* MetricItem.module.css */
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.labelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.labelWrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Status colors */
+.dot_success {
+  background-color: var(--color-success);
+  box-shadow: 0 0 6px var(--color-success);
+}
+.dot_warning {
+  background-color: var(--color-warning);
+  box-shadow: 0 0 6px var(--color-warning);
+}
+.dot_error {
+  background-color: var(--color-error);
+  box-shadow: 0 0 6px var(--color-error);
+}
+.dot_info {
+  background-color: var(--color-info);
+  box-shadow: 0 0 6px var(--color-info);
+}
+.dot_muted {
+  background-color: var(--text-muted);
+}
+
+.value {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.barTrack {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 99px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.8s ease-in-out;
+}
+
+.fill_cyan {
+  background-color: var(--color-neon-cyan);
+  box-shadow: 0 0 8px var(--color-neon-cyan);
+}
+.fill_blue {
+  background-color: var(--color-neon-blue);
+  box-shadow: 0 0 8px var(--color-neon-blue);
+}
+.fill_purple {
+  background-color: var(--color-neon-purple);
+  box-shadow: 0 0 8px var(--color-neon-purple);
+}
+.fill_success {
+  background-color: var(--color-success);
+  box-shadow: 0 0 8px var(--color-success);
+}
+.fill_warning {
+  background-color: var(--color-warning);
+  box-shadow: 0 0 8px var(--color-warning);
+}
+.fill_error {
+  background-color: var(--color-error);
+  box-shadow: 0 0 8px var(--color-error);
+}

@@ -1,0 +1,68 @@
+/* IconWrapper.module.css */
+
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+/* Sizes */
+.sm {
+  width: 28px;
+  height: 28px;
+}
+
+.md {
+  width: 36px;
+  height: 36px;
+}
+
+.lg {
+  width: 44px;
+  height: 44px;
+}
+
+/* Theme Colors */
+.cyan {
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  color: var(--color-neon-cyan);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+}
+
+.purple {
+  background: rgba(174, 0, 255, 0.08);
+  border: 1px solid rgba(174, 0, 255, 0.25);
+  color: var(--text-neon-purple);
+  box-shadow: 0 0 10px rgba(174, 0, 255, 0.1);
+}
+
+.blue {
+  background: rgba(0, 136, 255, 0.08);
+  border: 1px solid rgba(0, 136, 255, 0.25);
+  color: var(--color-neon-blue);
+  box-shadow: 0 0 10px rgba(0, 136, 255, 0.1);
+}
+
+.success {
+  background: rgba(0, 255, 210, 0.08);
+  border: 1px solid rgba(0, 255, 210, 0.25);
+  color: var(--color-success);
+  box-shadow: 0 0 10px rgba(0, 255, 210, 0.1);
+}
+
+.warning {
+  background: rgba(255, 183, 0, 0.08);
+  border: 1px solid rgba(255, 183, 0, 0.25);
+  color: var(--color-warning);
+  box-shadow: 0 0 10px rgba(255, 183, 0, 0.1);
+}
+
+.error {
+  background: rgba(255, 0, 85, 0.08);
+  border: 1px solid rgba(255, 0, 85, 0.25);
+  color: var(--color-error);
+  box-shadow: 0 0 10px rgba(255, 0, 85, 0.1);
+}
