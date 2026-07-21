@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { X, User, Activity, Compass, MapPin } from 'lucide-react';
-import { useTelemetry } from '../../../context/TelemetryContext';
+import { useTelemetry } from '../../../hooks/useTelemetry';
 import styles from './MapOverlay.module.css';
 
 interface MapOverlayProps {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Clock, Activity, Signal } from 'lucide-react';
-import { useTelemetry } from '../../context/TelemetryContext';
+import { useTelemetry } from '../../hooks/useTelemetry';
 import Panel from '../ui/Panel';
 import MetricItem from '../ui/MetricItem';
 import styles from './ConnectionStatusCard.module.css';

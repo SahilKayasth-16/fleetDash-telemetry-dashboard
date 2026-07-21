@@ -12,7 +12,7 @@ import { Settings } from './pages/Settings';
 export const App: React.FC = () => {
   return (
     <TelemetryProvider>
-      <BrowserRouter future={{ v7_relativeSplatPath: true }}>
+      <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
         <Routes>
           <Route element={<DashboardLayout />}>
             {/* Redirect root page to /dashboard */}

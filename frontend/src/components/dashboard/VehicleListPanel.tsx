@@ -1,6 +1,6 @@
 import React from 'react';
 import { Compass, Clock } from 'lucide-react';
-import { useTelemetry } from '../../context/TelemetryContext';
+import { useTelemetry } from '../../hooks/useTelemetry';
 import { Vehicle } from '../../types/telemetry';
 import Panel from '../ui/Panel';
 import Badge from '../ui/Badge';

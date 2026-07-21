@@ -1,6 +1,6 @@
 import React from 'react';
 import { Database, Server, Cpu, Globe, Link2 } from 'lucide-react';
-import { useTelemetry } from '../../context/TelemetryContext';
+import { useTelemetry } from '../../hooks/useTelemetry';
 import Panel from '../ui/Panel';
 import Badge from '../ui/Badge';
 import styles from './SystemHealthCard.module.css';

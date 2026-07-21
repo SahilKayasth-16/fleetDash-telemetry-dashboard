@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useTelemetry } from '../../../context/TelemetryContext';
+import { useTelemetry } from '../../../hooks/useTelemetry';
 import styles from './VehicleLayer.module.css';
 
 interface VehicleLayerProps {

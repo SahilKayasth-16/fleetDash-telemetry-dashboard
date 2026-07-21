@@ -56,3 +56,17 @@ export interface TelemetryState {
   systemHealth: SystemHealth;
   connection: ConnectionStatus;
 }
+
+export type SocketConnectionState = 'connected' | 'connecting' | 'reconnecting' | 'disconnected' | 'error';
+
+export interface VehicleTelemetry {
+  vehicleId: string;
+  latitude: number;
+  longitude: number;
+  speed: number;
+  heading: number;
+  timestamp: string;
+}
+
+export type TelemetryData = VehicleTelemetry;
+

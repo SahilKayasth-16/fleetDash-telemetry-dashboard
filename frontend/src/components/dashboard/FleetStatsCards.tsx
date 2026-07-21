@@ -1,6 +1,6 @@
 import React from 'react';
 import { Truck, Zap, Gauge, Wifi } from 'lucide-react';
-import { useTelemetry } from '../../context/TelemetryContext';
+import { useTelemetry } from '../../hooks/useTelemetry';
 import StatCard from '../ui/StatCard';
 import IconWrapper from '../ui/IconWrapper';
 

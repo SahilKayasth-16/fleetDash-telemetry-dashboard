@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useTelemetry } from '../../../context/TelemetryContext';
+import { useTelemetry } from '../../../hooks/useTelemetry';
 import useMap from '../hooks/useMap';
 import MapContainer from './MapContainer';
 import MapPlaceholder from './MapPlaceholder';
